@@ -27,7 +27,7 @@ However, to install this manually:
 
 1. Clone or download the repository.
 2. Place the `waterco` folder into your Home Assistant's `custom_components` directory.
-3. Configure the integration in your `configuration.yaml` file.
+3. Configure the integration through the Home Assistant UI.
 
 ## Configuration
 
