@@ -1,4 +1,12 @@
-![Waterco Logo](images/waterco-logo.png)
+<img src="https://raw.githubusercontent.com/brezlord/hass-waterco-electrochlor/refs/heads/main/images/waterco-logo.png"
+     alt="Waterco Logo"
+     width="35%"
+     align="right"
+     style="float: right; margin: 10px 0px 20px 20px;" />
+
+[![GitHub Release](https://img.shields.io/github/release/blakeblackshear/frigate-hass-integration.svg?style=flat-square)](https://github.com/brezlord/hass-waterco-electrochlor/releases)
+[![License](https://img.shields.io/github/license/blakeblackshear/frigate-hass-integration.svg?style=flat-square)](LICENSE.md)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs)
 
 # Electrochlor Home Assistant Integration
 
@@ -13,9 +21,28 @@ The `electrochlor` custom component integrates **Waterco's Electrochlor Mineral 
 
 ## Installation
 
+It is recommended this is installed using [Home Assistant Community Store (HACS)](https://hacs.xyz/) to ensure your Home Assistant instance can easily be kept up-to-date with the latest changes.
+
+However, to install this manually:
+
 1. Clone or download the repository.
-2. Place the `electrochlor` folder into your Home Assistant's `custom_components` directory.
+2. Place the `waterco` folder into your Home Assistant's `custom_components` directory.
 3. Configure the integration in your `configuration.yaml` file.
+
+## Configuration
+
+- Browse to your Home Assistant instance
+- In the sidebar click on  **Settings**
+- From the Settings menu select: **Devices & services**
+- In the bottom right, click on the **+ Add Integration** button
+- From the list, search and select “_Waterco_”
+- Follow the instruction to complete the set up
+
+## Recommendation
+
+- It is strongly recommended to assign a static IP address to your Waterco Electrochlor Pool Controller. This must be configured through your router’s DHCP settings, as the controller itself does not provide an option to manually set an IP address.
+
+- If the IP address does change, it can be updated directly via the integration’s configuration UI without needing to remove or reinstall the integration.
 
 ## Usage
 
