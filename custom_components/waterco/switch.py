@@ -3,7 +3,6 @@ Custom integration to integrate the Waterco Electrochlor with Home Assistant.
 
 For more details about this integration, please refer to
 https://github.com/brezlord/hass-waterco-electrochlor
-
 """
 
 import logging
@@ -13,6 +12,7 @@ import random
 from homeassistant.components.switch import SwitchEntity
 from .const import DOMAIN
 from .device_info import get_device_info
+from .device_icons import ICONS  # <- use dynamic icons
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -31,6 +31,8 @@ async def async_setup_entry(hass, entry, async_add_entities):
     async_add_entities(switches)
 
 class BaseSwitch(SwitchEntity):
+    """Base switch class."""
+
     def __init__(self, coordinator, entry):
         self.coordinator = coordinator
         self.entry = entry
@@ -80,6 +82,8 @@ class BaseSwitch(SwitchEntity):
         return False
 
 class GenericPoolSwitch(BaseSwitch):
+    """Switch for pool components using dynamic icons."""
+
     def __init__(self, coordinator, entry, config):
         super().__init__(coordinator, entry)
         self.config = config
@@ -102,13 +106,16 @@ class GenericPoolSwitch(BaseSwitch):
 
     @property
     def icon(self):
+        """Return icon based on state using device_icons.py."""
         key = self.config["key"]
         state = self.is_on
-        return {
-            "light": "mdi:lightbulb-on" if state else "mdi:lightbulb-on-10",
-            "pump": "mdi:pump" if state else "mdi:pump-off",
-            "aux2": "mdi:toggle-switch" if state else "mdi:toggle-switch-off",
-        }.get(key, "mdi:toggle-switch")
+        icons_for_key = ICONS.get(key, {})
+
+        if state and "on" in icons_for_key:
+            return icons_for_key["on"]
+        if not state and "off" in icons_for_key:
+            return icons_for_key["off"]
+        return icons_for_key.get("default", "mdi:help-circle")
 
     async def async_turn_on(self, **kwargs):
         self._optimistic_state = True
@@ -125,4 +132,3 @@ class GenericPoolSwitch(BaseSwitch):
         await self._poll_until_state(self.config["key"], False, status_key=self.config.get("status_key"))
         self._optimistic_state = None
         self.async_write_ha_state()
-

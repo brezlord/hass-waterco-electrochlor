@@ -3,27 +3,15 @@ Custom integration to integrate the Waterco Electrochlor with Home Assistant.
 
 For more details about this integration, please refer to
 https://github.com/brezlord/hass-waterco-electrochlor
-
 """
 
 import logging
-import json
-import os
 from homeassistant.components.binary_sensor import BinarySensorEntity
 from .const import DOMAIN
 from .device_info import get_device_info
+from .device_icons import ICONS  # <- dynamic icons
 
 _LOGGER = logging.getLogger(__name__)
-
-# Load icons.json
-ICONS = {}
-ICONS_PATH = os.path.join(os.path.dirname(__file__), "icons.json")
-if os.path.exists(ICONS_PATH):
-    with open(ICONS_PATH, "r") as f:
-        ICONS = json.load(f)
-    _LOGGER.debug("Loaded icons.json: %s", ICONS)
-else:
-    _LOGGER.warning("icons.json not found at %s", ICONS_PATH)
 
 BINARY_SENSOR_CONFIG = [
     {"key": "pump", "name": "Pool Pump", "device_class": "running", "status_key": "status"},
@@ -63,7 +51,7 @@ class GenericBinarySensor(BinarySensorEntity):
         key = self.config["key"]
         status_key = self.config.get("status_key")
         special = self.config.get("special")
-        data = self.coordinator.data
+        data = self.coordinator.data or {}
         if status_key:
             data = data.get(status_key, {})
 
@@ -73,16 +61,23 @@ class GenericBinarySensor(BinarySensorEntity):
 
     @property
     def icon(self):
+        """Return dynamic icon based on state using Python ICONS dict."""
         key = self.config["key"]
         special = self.config.get("special")
         state = self.is_on
-        chosen_icon = None
-        if key in ICONS:
-            if special == "salt_fault":
-                chosen_icon = ICONS[key].get("fault") if state else ICONS[key].get("normal")
-            else:
-                chosen_icon = ICONS[key].get("on") if state else ICONS[key].get("off")
-        return chosen_icon or "mdi:help-circle"
+        icons_for_key = ICONS.get(key, {})
+
+        if special == "salt_fault":
+            return icons_for_key.get("fault") if state else icons_for_key.get("normal", icons_for_key.get("default", "mdi:help-circle"))
+
+        # on/off icons for normal binary sensors
+        if state and "on" in icons_for_key:
+            return icons_for_key["on"]
+        if not state and "off" in icons_for_key:
+            return icons_for_key["off"]
+
+        # fallback
+        return icons_for_key.get("default", "mdi:help-circle")
 
     @property
     def device_class(self):
@@ -98,4 +93,3 @@ class GenericBinarySensor(BinarySensorEntity):
     @property
     def device_info(self):
         return get_device_info(self.coordinator, self.entry)
-
