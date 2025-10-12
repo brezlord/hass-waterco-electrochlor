@@ -1,4 +1,4 @@
-name: HACS Validate
+name: HACS Validation
 
 on:
   push:
@@ -14,8 +14,9 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Validate HACS Repository
-        uses: hacs/action@v1
+      - name: Validate with HACS Action
+        uses: hacs/action@22.5.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          category: integration
           validate: true
