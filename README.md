@@ -8,9 +8,9 @@
 [![License](https://img.shields.io/github/license/brezlord/hass-waterco-electrochlor.svg?style=flat-square)](LICENSE.md)
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=flat-square)](https://github.com/custom-components/hacs)
 
-# Electrochlor Home Assistant Integration
+# Waterco Home Assistant Integration
 
-The `electrochlor` custom component integrates **Waterco's Electrochlor Mineral Chlorinator** with Home Assistant, enabling automation and monitoring of pool sanitization and filtration systems. This integration allows users to access real-time data and control various aspects of their pool equipment directly from the Home Assistant interface.
+The `Waterco` custom component integrates **Waterco's Electrochlor Mineral Chlorinator** with Home Assistant, enabling automation and monitoring of pool sanitization and filtration systems. This integration allows users to access real-time data and control various aspects of their pool equipment directly from the Home Assistant interface.
 
 ## Features
 
