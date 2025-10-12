@@ -1,27 +1,27 @@
 {
   "title": "Electrochlor Pool Chlorinator",
   "sensor": {
-    "pool_temperature": "Pool Temperature",
-    "pool_ph": "Pool pH",
     "pool_chlorine_production": "Pool Chlorine Production",
+    "pool_chlorinator_cell_direction": "Pool Chlorinator Cell Direction",
+    "pool_chlorinator_status": "Pool Chlorinator Status",
+    "pool_light_color": "Pool Light Colour",
     "pool_operation_mode": "Pool Operation Mode",
     "pool_operation_type": "Pool Operation Type",
+    "pool_ph": "Pool pH",
     "pool_pump_speed": "Pool Pump Speed",
-    "pool_light_color": "Pool Light Colour",
     "pool_salt_status": "Pool Salt Status",
-    "pool_chlorinator_status": "Pool Chlorinator Status",
-    "pool_chlorinator_cell_direction": "Pool Chlorinator Cell Direction"
+    "pool_temperature": "Pool Temperature"
   },
   "binary_sensor": {
-    "pool_pump": "Pool Pump",
-    "pool_light": "Pool Light",
-    "pool_ph_pump": "Pool pH Pump",
-    "pool_valve": "Pool Valve",
     "pool_aux2": "Pool Aux2",
     "pool_chlorinator_cell_direction_a": "Pool Chlorinator Cell Direction A",
     "pool_chlorinator_cell_direction_b": "Pool Chlorinator Cell Direction B",
     "pool_chlorinator_error": "Pool Chlorinator Error",
-    "pool_salt_fault": "Pool Salt Fault"
+    "pool_light": "Pool Light",
+    "pool_ph_pump": "Pool pH Pump",
+    "pool_pump": "Pool Pump",
+    "pool_salt_fault": "Pool Salt Fault",
+    "pool_valve": "Pool Valve"
   },
   "switch": {
     "pool_lights": "Pool Lights",
