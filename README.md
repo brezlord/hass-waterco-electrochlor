@@ -4,9 +4,9 @@
      align="right"
      style="float: right; margin: 10px 0px 20px 20px;" />
 
-[![GitHub Release](https://img.shields.io/github/release/blakeblackshear/frigate-hass-integration.svg?style=flat-square)](https://github.com/brezlord/hass-waterco-electrochlor/releases)
-[![License](https://img.shields.io/github/license/blakeblackshear/frigate-hass-integration.svg?style=flat-square)](LICENSE.md)
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=for-the-badge)](https://github.com/custom-components/hacs)
+[![GitHub Release](https://img.shields.io/github/release/brezlord/hass-waterco-electrochlor.svg?style=flat-square)](https://github.com/brezlord/hass-waterco-electrochlor/releases)
+[![License](https://img.shields.io/github/license/brezlord/hass-waterco-electrochlor.svg?style=flat-square)](LICENSE.md)
+[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=flat-square)](https://github.com/custom-components/hacs)
 
 # Electrochlor Home Assistant Integration
 
