@@ -1,7 +1,7 @@
 {
   "domain": "waterco",
   "name": "Waterco Electrochlor Pool Chlorinator",
-  "version": "1.0.0",
+  "version": "2025.10.12",
   "documentation": "https://github.com/brezlord/hass-waterco-electrochlor",
   "requirements": ["aiohttp"],
   "dependencies": [],
