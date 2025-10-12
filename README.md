@@ -58,3 +58,7 @@ Once installed, the component will create **sensors** and **switches** in Home A
 ---
 
 This integration enhances the functionality of your Electrochlor system, providing greater control and insight into your pool's maintenance.
+
+## Disclaimer
+
+**This project is not endorsed by, directly affiliated with, maintained, authorized, or sponsored by Waterco.**
