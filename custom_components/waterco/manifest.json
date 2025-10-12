@@ -1,6 +1,6 @@
 {
   "domain": "waterco",
-  "name": "Waterco Electrochlor Pool Chlorinator",
+  "name": "Waterco",
   "codeowners": ["@brezlord"],
   "config_flow": true,
   "documentation": "https://github.com/brezlord/hass-waterco-electrochlor",
