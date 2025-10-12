@@ -1,4 +1,4 @@
-name: HACS Validation
+name: HACS Validate
 
 on:
   push:
@@ -8,22 +8,14 @@ on:
   pull_request:
 
 jobs:
-  hacs:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
+      - name: Validate HACS Repository
+        uses: hacs/action@v1
         with:
-          python-version: "3.12"
-
-      - name: Install HACS Tools
-        run: |
-          python -m pip install --upgrade pip
-          pip install hacs-tools
-
-      - name: Run HACS validation
-        run: |
-          python -m hacs_tools.validate
+          token: ${{ secrets.GITHUB_TOKEN }}
+          validate: true
