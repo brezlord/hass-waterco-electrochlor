@@ -1,18 +1,23 @@
-name: Hassfest Validation
+name: hassfest
 
 on:
   push:
-    branches:
-      - main
-      - master
   pull_request:
+  schedule:
+    - cron: 0 0 * * *
+
+permissions: {}
 
 jobs:
-  hassfest:
+  validate:
+    name: hassfest
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
 
-      - name: Run Hassfest
-        uses: home-assistant/actions/hassfest@v1
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: home-assistant/actions/hassfest@master

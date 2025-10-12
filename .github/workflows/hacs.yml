@@ -1,22 +1,26 @@
-name: HACS Validation
+name: HACS
 
 on:
   push:
-    branches:
-      - main
-      - master
   pull_request:
+  schedule:
+    - cron: 0 0 * * *
+
+permissions: {}
 
 jobs:
   validate:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+    name: HACS
 
-      - name: Validate with HACS Action
-        uses: hacs/action@22.5.0
+    permissions:
+      contents: read
+      packages: read
+      statuses: write
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: HACS validation
+        uses: hacs/action@main
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          category: integration
-          validate: true
+          CATEGORY: integration
