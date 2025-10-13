@@ -9,7 +9,7 @@ import logging
 import aiohttp
 import asyncio
 import random
-from homeassistant.components.switch import SwitchEntity
+from homeassistant.components.switch import SwitchEntity  
 from .const import DOMAIN
 from .device_info import get_device_info
 from .device_icons import ICONS  # <- use dynamic icons
@@ -17,9 +17,8 @@ from .device_icons import ICONS  # <- use dynamic icons
 _LOGGER = logging.getLogger(__name__)
 
 SWITCH_CONFIG = [
-    {"key": "light", "name": "Pool Lights", "command_key": "light", "status_key": "status"},
     {"key": "pump", "name": "Pool Pump", "command_key": "state", "status_key": "status"},
-    {"key": "aux2", "name": "Pool Aux2", "command_key": "state", "status_key": "status"},
+    {"key": "light", "name": "Pool Lights", "command_key": "light", "status_key": "status"},
 ]
 
 POLL_INTERVAL = 3
