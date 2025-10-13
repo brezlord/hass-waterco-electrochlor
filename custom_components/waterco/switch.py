@@ -19,8 +19,6 @@ _LOGGER = logging.getLogger(__name__)
 SWITCH_CONFIG = [
     {"key": "pump", "name": "Pool Pump", "command_key": "state", "status_key": "status"},
     {"key": "light", "name": "Pool Lights", "command_key": "light", "status_key": "status"},
-    {"key": "pump", "name": "Pool Pump", "command_key": "state", "status_key": "status"},
-    {"key": "aux2", "name": "Pool Aux2", "command_key": "state", "status_key": "status"},
 ]
 
 POLL_INTERVAL = 3
