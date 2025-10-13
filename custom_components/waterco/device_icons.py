@@ -10,7 +10,7 @@ Dynamic icons for Electrochlor sensors and binary sensor
 ICONS = {
     "pump": {"on": "mdi:pump", "off": "mdi:pump-off"},
     "phPump": {"on": "mdi:heat-pump", "off": "mdi:heat-pump-outline"},
-    "light": {"on": "mdi:lightbulb-on", "off": "mdi:lightbulb"},
+    "light": {"on": "mdi:lightbulb-on", "off": "mdi:lightbulb-off"},
     "valve": {"on": "mdi:valve-open", "off": "mdi:valve-closed"},
     "aux2": {"on": "mdi:power-plug", "off": "mdi:power-plug-off"},
     "cellDirectionA": {"on": "mdi:arrow-left-bold-circle", "off": "mdi:arrow-left-circle-outline"},
