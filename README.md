@@ -3,7 +3,7 @@
 [![HACS Badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=flat-square)](https://github.com/custom-components/hacs)
 ![HACS Build](https://github.com/brezlord/hass-waterco-electrochlor/workflows/HACS/badge.svg?style=flat-square)
 
-[![Waterco](https://raw.githubusercontent.com/brezlord/hass-waterco-electrochlor/refs/heads/main/images/waterco-logo.png)](https://www.waterco.com.au)
+[![Waterco](https://raw.githubusercontent.com/brezlord/hass-waterco-electrochlor/refs/heads/main/images/waterco-logo.png)](https://www.waterco.com.au){width=50%}
 
 # Waterco Home Assistant Integration
 
