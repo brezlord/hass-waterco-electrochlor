@@ -1,7 +1,8 @@
 [![GitHub Release](https://img.shields.io/github/release/brezlord/hass-waterco-electrochlor.svg?style=flat-square)](https://github.com/brezlord/hass-waterco-electrochlor/releases)
 [![License](https://img.shields.io/github/license/brezlord/hass-waterco-electrochlor.svg?style=flat-square)](LICENSE.md)
 [![HACS Badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=flat-square)](https://github.com/custom-components/hacs)
-![HACS Build](https://img.shields.io/github/actions/workflow/status/brezlord/hass-waterco-electrochlor/hacs.yaml?style=flat-square)
+![HACS Build](https://github.com/brezlord/hass-waterco-electrochlor/workflows/HACS/badge.svg?style=flat-square)
+![HASS Build](https://github.com/brezlord/hass-waterco-electrochlor/workflows/hassfest/badge.svg?style=flat-square)
 ![Downloads](https://img.shields.io/github/downloads/brezlord/hass-waterco-electrochlor/total?style=flat-square)
 
 <a href="https://www.waterco.com.au" target="_blank">
