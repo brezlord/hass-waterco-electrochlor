@@ -1,3 +1,4 @@
+[![HACS Badge](https://img.shields.io/badge/Available%20in-HACS-41BDF5?logo=home-assistant&logoColor=white)](https://www.hacs.xyz/)
 [![GitHub Release](https://img.shields.io/github/release/brezlord/hass-waterco-electrochlor.svg?style=flat-square)](https://github.com/brezlord/hass-waterco-electrochlor/releases)
 [![License](https://img.shields.io/github/license/brezlord/hass-waterco-electrochlor.svg?style=flat-square)](LICENSE.md)
 [![HACS Badge](https://img.shields.io/badge/HACS-Default-orange.svg?style=flat-square)](https://github.com/custom-components/hacs)
