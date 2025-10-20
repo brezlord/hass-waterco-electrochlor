@@ -17,6 +17,5 @@ def get_device_info(coordinator, entry):
         name=f"Electrochlor {ip_address}",
         manufacturer="Waterco",
         model="Electrochlor Pool Controller",
-        sw_version="1.81",
         configuration_url=f"http://{ip_address}",  # Visit link
     )

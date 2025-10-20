@@ -1,15 +1,12 @@
-"""
-Custom integration to integrate the Waterco Electrochlor with Home Assistant.
-
-For more details about this integration, please refer to
-https://github.com/brezlord/hass-waterco-electrochlor
-"""
+from __future__ import annotations
 
 import logging
 from homeassistant.components.binary_sensor import BinarySensorEntity
+from homeassistant.helpers.update_coordinator import CoordinatorEntity
+
 from .const import DOMAIN
 from .device_info import get_device_info
-from .device_icons import ICONS  # <- dynamic icons
+from .device_icons import ICONS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -25,15 +22,18 @@ BINARY_SENSOR_CONFIG = [
     {"key": "saltStatus", "name": "Pool Salt Fault", "device_class": "problem", "special": "salt_fault"},
 ]
 
+
 async def async_setup_entry(hass, entry, async_add_entities):
     coordinator = hass.data[DOMAIN][entry.entry_id]
     sensors = [GenericBinarySensor(coordinator, entry, config) for config in BINARY_SENSOR_CONFIG]
     async_add_entities(sensors)
 
-class GenericBinarySensor(BinarySensorEntity):
+
+class GenericBinarySensor(CoordinatorEntity, BinarySensorEntity):
     """Generic binary sensor for pool components."""
 
     def __init__(self, coordinator, entry, config):
+        super().__init__(coordinator)
         self.coordinator = coordinator
         self.config = config
         self.entry = entry
@@ -44,7 +44,8 @@ class GenericBinarySensor(BinarySensorEntity):
 
     @property
     def unique_id(self):
-        return f"{self.coordinator.device_id}_{self.config['name'].lower().replace(' ', '_')}"
+        # Use the entry_id + key for a stable unique id
+        return f"{self.coordinator.device_id}_{self.config['key']}"
 
     @property
     def is_on(self):
@@ -52,16 +53,18 @@ class GenericBinarySensor(BinarySensorEntity):
         status_key = self.config.get("status_key")
         special = self.config.get("special")
         data = self.coordinator.data or {}
+
         if status_key:
             data = data.get(status_key, {})
 
         if special == "salt_fault":
-            return data.get(key) != "NORMAL"
-        return data.get(key, False)
+            # treat anything other than NORMAL as a fault
+            return data.get(key) not in (None, "NORMAL", "Ok", "OK")
+        return bool(data.get(key))
 
     @property
     def icon(self):
-        """Return dynamic icon based on state using Python ICONS dict."""
+        """Return dynamic icon based on state using ICONS dict."""
         key = self.config["key"]
         special = self.config.get("special")
         state = self.is_on
@@ -70,13 +73,11 @@ class GenericBinarySensor(BinarySensorEntity):
         if special == "salt_fault":
             return icons_for_key.get("fault") if state else icons_for_key.get("normal", icons_for_key.get("default", "mdi:help-circle"))
 
-        # on/off icons for normal binary sensors
         if state and "on" in icons_for_key:
             return icons_for_key["on"]
         if not state and "off" in icons_for_key:
             return icons_for_key["off"]
 
-        # fallback
         return icons_for_key.get("default", "mdi:help-circle")
 
     @property
@@ -85,10 +86,8 @@ class GenericBinarySensor(BinarySensorEntity):
 
     @property
     def available(self):
+        # CoordinatorEntity already offers coordinator last_update_success, but this is explicit
         return self.coordinator.last_update_success
-
-    async def async_update(self):
-        await self.coordinator.async_request_refresh()
 
     @property
     def device_info(self):
