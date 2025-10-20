@@ -3,7 +3,7 @@ from homeassistant import config_entries
 from homeassistant.core import callback
 from homeassistant.helpers import selector
 
-from .const import DOMAIN, CONF_IP_ADDRESS, CONF_PORT, DEFAULT_PORT
+from .const import DOMAIN, CONF_IP_ADDRESS, CONF_PORT, DEFAULT_PORT, CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL
 
 
 class ElectrochlorConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -29,6 +29,7 @@ class ElectrochlorConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             {
                 vol.Required(CONF_IP_ADDRESS): str,
                 vol.Optional(CONF_PORT, default=DEFAULT_PORT): int,
+                vol.Optional(CONF_SCAN_INTERVAL, default=DEFAULT_SCAN_INTERVAL): int,
             }
         )
 
@@ -57,6 +58,7 @@ class ElectrochlorOptionsFlowHandler(config_entries.OptionsFlow):
             {
                 vol.Required(CONF_IP_ADDRESS, default=self.config_entry.data.get(CONF_IP_ADDRESS)): str,
                 vol.Optional(CONF_PORT, default=self.config_entry.data.get(CONF_PORT, DEFAULT_PORT)): int,
+                vol.Optional(CONF_SCAN_INTERVAL, default=self.config_entry.data.get(CONF_SCAN_INTERVAL, DEFAULT_SCAN_INTERVAL)): int,
             }
         )
 

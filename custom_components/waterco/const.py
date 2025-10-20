@@ -1,5 +1,6 @@
 DOMAIN = "waterco"
-CONF_IP_ADDRESS = "ip_address"
-CONF_PORT = "port"
+CONF_IP_ADDRESS = "IP Address"
+CONF_PORT = "API Port"
 DEFAULT_PORT = 90
+CONF_SCAN_INTERVAL = "Scan Interval Seconds"
 DEFAULT_SCAN_INTERVAL = 60
