@@ -1,18 +1,14 @@
-"""
-Custom integration to integrate the Waterco Electrochlor with Home Assistant.
-
-For more details about this integration, please refer to
-https://github.com/brezlord/hass-waterco-electrochlor
-"""
-
+"""Switch platform for Waterco Electrochlor integration."""
 import logging
 import aiohttp
 import asyncio
 import random
-from homeassistant.components.switch import SwitchEntity  
+from typing import Any
+
+from homeassistant.components.switch import SwitchEntity
 from .const import DOMAIN
-from .device_info import get_device_info
-from .device_icons import ICONS  # <- use dynamic icons
+from .device_info import make_device_info
+from .device_icons import ICONS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -23,6 +19,27 @@ SWITCH_CONFIG = [
 
 POLL_INTERVAL = 3
 POLL_TIMEOUT = 30
+
+def find_key(data: dict[str, Any], target_key: str) -> Any:
+    """Recursively search for a key in nested dictionaries."""
+    if isinstance(data, dict):
+        if target_key in data:
+            return data[target_key]
+        for value in data.values():
+            found = find_key(value, target_key)
+            if found is not None:
+                return found
+    return None
+
+def extract_state(value: Any) -> bool:
+    """Convert different types of values to boolean."""
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        return value.lower() in ["true", "on", "1"]
+    if isinstance(value, (int, float)):
+        return value != 0
+    return False
 
 async def async_setup_entry(hass, entry, async_add_entities):
     coordinator = hass.data[DOMAIN][entry.entry_id]
@@ -38,13 +55,14 @@ class BaseSwitch(SwitchEntity):
 
     @property
     def available(self):
-        return self.coordinator.last_update_success
+        # Available if coordinator has any data
+        return bool(self.coordinator.data)
 
     @property
     def device_info(self):
-        return get_device_info(self.coordinator, self.entry)
+        return make_device_info(self.entry, self.coordinator.data)
 
-    async def _send_command(self, path, value):
+    async def _send_command(self, path: str, value: Any):
         boundary = "----WebKitFormBoundary" + "".join(
             random.choices("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", k=16)
         )
@@ -62,18 +80,22 @@ class BaseSwitch(SwitchEntity):
                 async with session.post(url, data=data.encode("utf-8"), headers=headers) as resp:
                     text = await resp.text()
                     if resp.status != 200:
-                        _LOGGER.error("Failed command to %s (HTTP %s): %s", path, resp.status, text.strip())
+                        _LOGGER.error(
+                            "Failed command to %s (HTTP %s): %s", path, resp.status, text.strip()
+                        )
         except Exception as e:
             _LOGGER.error("Error sending command to %s: %s", path, e)
 
-    async def _poll_until_state(self, key, desired_state, status_key=None):
+    async def _poll_until_state(self, key: str, desired_state: bool, status_key: str | None = None) -> bool:
+        """Poll the device until the desired state is reached or timeout occurs."""
         elapsed = 0
         while elapsed < POLL_TIMEOUT:
             await self.coordinator.async_request_refresh()
-            data = self.coordinator.data
+            data = self.coordinator.data or {}
             if status_key:
                 data = data.get(status_key, {})
-            if data.get(key) == desired_state:
+            value = find_key(data, key)
+            if extract_state(value) == desired_state:
                 return True
             await asyncio.sleep(POLL_INTERVAL)
             elapsed += POLL_INTERVAL
@@ -81,12 +103,12 @@ class BaseSwitch(SwitchEntity):
         return False
 
 class GenericPoolSwitch(BaseSwitch):
-    """Switch for pool components using dynamic icons."""
+    """Switch for pool components with dynamic icons and optimistic updates."""
 
     def __init__(self, coordinator, entry, config):
         super().__init__(coordinator, entry)
         self.config = config
-        self._optimistic_state = None
+        self._optimistic_state: bool | None = None
 
     @property
     def name(self):
@@ -94,22 +116,21 @@ class GenericPoolSwitch(BaseSwitch):
 
     @property
     def unique_id(self):
-        return f"{self.coordinator.device_id}_{self.config['name'].lower().replace(' ', '_')}"
+        return f"{self.entry.entry_id}_{self.config['key']}"
 
     @property
     def is_on(self):
         if self._optimistic_state is not None:
             return self._optimistic_state
-        data = self.coordinator.data.get(self.config.get("status_key", ""), {})
-        return data.get(self.config["key"], False)
+        data = self.coordinator.data or {}
+        value = find_key(data, self.config["key"])
+        return extract_state(value)
 
     @property
     def icon(self):
-        """Return icon based on state using device_icons.py."""
         key = self.config["key"]
         state = self.is_on
         icons_for_key = ICONS.get(key, {})
-
         if state and "on" in icons_for_key:
             return icons_for_key["on"]
         if not state and "off" in icons_for_key:

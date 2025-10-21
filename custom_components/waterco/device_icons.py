@@ -1,28 +1,89 @@
-"""
-Custom integration to integrate the Waterco Electrochlor with Home Assistant.
+"""Dynamic icon definitions for Waterco Electrochlor integration."""
 
-For more details about this integration, please refer to
-https://github.com/brezlord/hass-waterco-electrochlor
+ICONS: dict[str, dict[str, str]] = {
+    # Binary sensors / switches
+    "pump": {
+        "on": "mdi:pump",
+        "off": "mdi:pump-off",
+        "default": "mdi:pump",
+    },
+    "light": {
+        "on": "mdi:lightbulb-on",
+        "off": "mdi:lightbulb-off",
+        "default": "mdi:lightbulb",
+    },
+    "phPump": {
+        "on": "mdi:beaker",
+        "off": "mdi:beaker-outline",
+        "default": "mdi:beaker",
+    },
+    "valve": {
+        "on": "mdi:valve-open",
+        "off": "mdi:valve-closed",
+        "default": "mdi:valve",
+    },
+    "aux2": {
+        "on": "mdi:power-plug",
+        "off": "mdi:power-plug-off",
+        "default": "mdi:power-plug",
+    },
+    "cellDirectionA": {
+        "on": "mdi:alpha-a-circle",
+        "off": "mdi:alpha-a-circle-outline",
+        "default": "mdi:alpha-a",
+    },
+    "cellDirectionB": {
+        "on": "mdi:alpha-b-circle",
+        "off": "mdi:alpha-b-circle-outline",
+        "default": "mdi:alpha-b",
+    },
+    "error": {
+        "on": "mdi:alert-circle-outline",
+        "off": "mdi:check-circle-outline",
+        "default": "mdi:alert",
+    },
+    "saltStatus": {
+        "fault": "mdi:alert-octagon-outline",
+        "normal": "mdi:check-decagram-outline",
+        "default": "mdi:shaker-outline",
+    },
 
-Dynamic icons for Electrochlor sensors and binary sensor
-"""
-
-ICONS = {
-    "pump": {"on": "mdi:pump", "off": "mdi:pump-off"},
-    "phPump": {"on": "mdi:heat-pump", "off": "mdi:heat-pump-outline"},
-    "light": {"on": "mdi:lightbulb-on", "off": "mdi:lightbulb-off"},
-    "valve": {"on": "mdi:valve-open", "off": "mdi:valve-closed"},
-    "aux2": {"on": "mdi:power-plug", "off": "mdi:power-plug-off"},
-    "cellDirectionA": {"on": "mdi:arrow-left-bold-circle", "off": "mdi:arrow-left-circle-outline"},
-    "cellDirectionB": {"on": "mdi:arrow-right-bold-circle", "off": "mdi:arrow-right-circle-outline"},
-    "error": {"on": "mdi:alert-circle", "off": "mdi:check-circle", "Error": "mdi:alert-circle", "OK": "mdi:check-circle"},
-    "saltStatus": {"fault": "mdi:alert-circle", "normal": "mdi:check-circle"},
-    "temp": {"default": "mdi:thermometer"},
-    "ph": {"default": "mdi:ph"},
-    "chlorineProduction": {"default": "mdi:chemical-weapon"},
-    "operation": {"Manual Standby": "mdi:pause-circle-outline", "Manual On": "mdi:play-circle-outline", "default": "mdi:help-circle-outline"},
-    "operationType": {"Manual": "mdi:hand-back-left", "Automatic": "mdi:robot", "default": "mdi:help-circle-outline"},
-    "pumpSpeed": {"default": "mdi:speedometer"},
-    "lightColor": {"default": "mdi:palette"},
-    "status": {"A": "mdi:arrow-left-bold-circle", "B": "mdi:arrow-right-bold-circle", "Off": "mdi:power-off", "default": "mdi:help-circle-outline"}
+    # Sensor readings
+    "temp": {
+        "default": "mdi:thermometer",
+    },
+    "ph": {
+        "default": "mdi:ph",
+    },
+    "chlorineProduction": {
+        "on": "mdi:chemical-weapon",
+        "off": "mdi:flask-empty-outline",
+        "default": "mdi:flask",
+    },
+    "operation": {
+        "default": "mdi:cog-outline",
+    },
+    "operationType": {
+        "default": "mdi:playlist-edit",
+    },
+    "pumpSpeed": {
+        "default": "mdi:speedometer",
+    },
+    "lightColor": {
+        "default": "mdi:palette-outline",
+    },
+    "saltStatus_sensor": {
+        "default": "mdi:shaker-outline",
+    },
+    "status": {
+        "A": "mdi:alpha-a-circle",
+        "B": "mdi:alpha-b-circle",
+        "Off": "mdi:power",
+        "default": "mdi:information-outline",
+    },
+    "error_sensor": {
+        "Error": "mdi:alert-octagon-outline",
+        "OK": "mdi:check-circle-outline",
+        "default": "mdi:alert",
+    },
 }
