@@ -1,7 +1,7 @@
 {
   "domain": "waterco",
   "name": "Waterco",
-  "version": "2025.10.14",
+  "version": "2025.10.21",
   "documentation": "https://github.com/brezlord/hass-waterco-electrochlor",
   "issue_tracker": "https://github.com/brezlord/hass-waterco-electrochlor/issues",
   "requirements": [],
