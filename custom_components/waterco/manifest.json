@@ -1,13 +1,11 @@
 {
   "domain": "waterco",
   "name": "Waterco",
-  "version": "2025.10.21",
-  "documentation": "https://github.com/brezlord/hass-waterco-electrochlor",
-  "issue_tracker": "https://github.com/brezlord/hass-waterco-electrochlor/issues",
-  "requirements": [],
-  "dependencies": [],
+  "config_flow": true,
   "codeowners": ["@brezlord"],
-  "iot_class": "local_polling",
+  "documentation": "https://github.com/brezlord/hass-waterco-electrochlor",
   "integration_type": "device",
-  "config_flow": true
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/brezlord/hass-waterco-electrochlor/issues",
+  "version": "2025.10.21"
 }
