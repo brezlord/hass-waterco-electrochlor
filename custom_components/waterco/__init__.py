@@ -113,10 +113,12 @@ async def async_migrate_entry(
         entry.version,
     )
 
+    # ---------------------------------------------------------------
+    # Version 1 -> Version 2
+    # ---------------------------------------------------------------
     if entry.version == 1:
         options = dict(entry.options)
 
-        # Add the new user-defined device name.
         options.setdefault(
             CONF_DEVICE_NAME,
             entry.data.get(
@@ -125,7 +127,6 @@ async def async_migrate_entry(
             ),
         )
 
-        # Move the existing connection settings into options.
         options.setdefault(
             CONF_IP_ADDRESS,
             entry.data.get(
@@ -162,6 +163,25 @@ async def async_migrate_entry(
             entry.entry_id,
         )
 
+    # ---------------------------------------------------------------
+    # Version 2 -> Version 3
+    #
+    # Version 3 does not change the stored configuration.
+    # This simply formalises version 3 so existing entries that were
+    # accidentally advanced to version 3 can remain valid.
+    # ---------------------------------------------------------------
+    if entry.version == 2:
+        hass.config_entries.async_update_entry(
+            entry,
+            version=3,
+        )
+
+        _LOGGER.info(
+            "Migrated Waterco Electrochlor config entry %s "
+            "from version 2 to version 3",
+            entry.entry_id,
+        )
+
     return True
 
 
@@ -184,9 +204,6 @@ async def _async_update_options(
         )
         return
 
-    # Update the coordinator with the new name, IP,
-    # port and polling interval.
     coordinator.update_from_entry(entry)
 
-    # Refresh immediately using the new settings.
     await coordinator.async_request_refresh()

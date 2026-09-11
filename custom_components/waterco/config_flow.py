@@ -5,7 +5,6 @@ from __future__ import annotations
 from typing import Any
 
 import voluptuous as vol
-
 from homeassistant import config_entries
 from homeassistant.const import CONF_PORT
 from homeassistant.core import callback
@@ -28,7 +27,7 @@ class ElectrochlorConfigFlow(
 ):
     """Handle a config flow for Waterco Electrochlor."""
 
-    VERSION = 2
+    VERSION = 3
 
     async def async_step_user(
         self,
@@ -40,7 +39,6 @@ class ElectrochlorConfigFlow(
             await self.async_set_unique_id(
                 user_input[CONF_IP_ADDRESS]
             )
-
             self._abort_if_unique_id_configured(
                 updates=user_input,
             )
